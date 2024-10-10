@@ -45,7 +45,7 @@ func (h *UserHandler) JWTMiddleware(next fasthttp.RequestHandler) fasthttp.Reque
 
 // CreateUser cria um novo usuário
 // @Summary Cria um novo usuário
-// @Description Cria um usuário com nome, e-mail e senha
+// @Description Cria um usuário com nome, e-mail, senha e cep
 // @Tags users
 // @Accept json
 // @Produce json
@@ -194,12 +194,12 @@ func (h *UserHandler) ForgotPassword(ctx *fasthttp.RequestCtx) {
 
 // ListUsers lista todos os usuários
 // @Summary Lista usuários
-// @Description Lista todos os usuários com limite e deslocamento utilizar header "Authorization": "Bearer {token}"
+// @Description Lista todos os usuários com limit e offset utilizar header "Authorization": "Bearer {token}"
 // @Tags users
 // @Accept json
 // @Produce json
-// @Param limit query int false "Limite de usuários Padrão: 10"
-// @Param offset query int false "Deslocamento - Padrão: 0"
+// @Param limit query int false "Limit Padrão: 10"
+// @Param offset query int false "Offset - Padrão: 0"
 // @Success 200 {array} users.User
 // @Failure 400 {object} Err
 // @Failure 500 {object} Err

@@ -17,7 +17,7 @@ const docTemplate = `{
     "paths": {
         "/users": {
             "get": {
-                "description": "Lista todos os usuários com limite e deslocamento utilizar header \"Authorization\": \"Bearer {token}\"",
+                "description": "Lista todos os usuários com limit e offset utilizar header \"Authorization\": \"Bearer {token}\"",
                 "consumes": [
                     "application/json"
                 ],
@@ -31,13 +31,13 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "Limite de usuários Padrão: 10",
+                        "description": "Limit Padrão: 10",
                         "name": "limit",
                         "in": "query"
                     },
                     {
                         "type": "integer",
-                        "description": "Deslocamento - Padrão: 0",
+                        "description": "Offset - Padrão: 0",
                         "name": "offset",
                         "in": "query"
                     }
@@ -67,7 +67,7 @@ const docTemplate = `{
                 }
             },
             "post": {
-                "description": "Cria um usuário com nome, e-mail e senha",
+                "description": "Cria um usuário com nome, e-mail, senha e cep",
                 "consumes": [
                     "application/json"
                 ],

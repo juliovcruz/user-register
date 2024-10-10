@@ -119,14 +119,14 @@ paths:
     get:
       consumes:
       - application/json
-      description: 'Lista todos os usuários com limite e deslocamento utilizar header
-        "Authorization": "Bearer {token}"'
+      description: 'Lista todos os usuários com limit e offset utilizar header "Authorization":
+        "Bearer {token}"'
       parameters:
-      - description: 'Limite de usuários Padrão: 10'
+      - description: 'Limit Padrão: 10'
         in: query
         name: limit
         type: integer
-      - description: 'Deslocamento - Padrão: 0'
+      - description: 'Offset - Padrão: 0'
         in: query
         name: offset
         type: integer
@@ -153,7 +153,7 @@ paths:
     post:
       consumes:
       - application/json
-      description: Cria um usuário com nome, e-mail e senha
+      description: Cria um usuário com nome, e-mail, senha e cep
       parameters:
       - description: Usuário
         in: body

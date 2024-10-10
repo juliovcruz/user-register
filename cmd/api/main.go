@@ -51,7 +51,7 @@ func main() {
 
 	r.POST("/users", userHandler.CreateUser)
 	r.GET("/users", userHandler.JWTMiddleware(userHandler.ListUsers))
-	r.PUT("/users", userHandler.UpdatePassword)
+	r.PUT("/users/password", userHandler.UpdatePassword)
 	r.POST("/users/forgot_password", userHandler.ForgotPassword)
 
 	r.POST("/login", userHandler.Login)

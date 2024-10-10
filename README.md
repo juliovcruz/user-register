@@ -2,10 +2,9 @@
 
 # How to run
 
-Execute the commands:
+Execute the command:
 ```
-docker build -t user-register .
-docker run -p 8080:8080 user-register
+docker build -t user-register . && docker run -p 8080:8080 user-register
 ``` 
 
 Now you can access the application at the URL `http://localhost:8080`.
