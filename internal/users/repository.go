@@ -66,21 +66,27 @@ func (r *sqliteRepository) Update(ctx context.Context, email, password string) e
 }
 
 func (r *sqliteRepository) GetByEMail(ctx context.Context, email string) (User, error) {
-	query := `SELECT id, name, email, password FROM users WHERE email = ?`
+	query := `SELECT id, name, email, password, address FROM users WHERE email = ?`
 	row := r.db.QueryRowContext(ctx, query, email)
 
 	var user User
-	err := row.Scan(&user.ID, &user.Name, &user.Email, &user.Password)
+	var addressJSON []byte
+	err := row.Scan(&user.ID, &user.Name, &user.Email, &user.Password, &addressJSON)
 	if errors.Is(err, sql.ErrNoRows) {
 		return user, ErrNotFound
 	} else if err != nil {
 		return user, fmt.Errorf("failed to retrieve user by email: %v", err)
 	}
+
+	if err := json.Unmarshal(addressJSON, &user.Address); err != nil {
+		return user, fmt.Errorf("failed to unmarshal address: %v", err)
+	}
+
 	return user, nil
 }
 
 func (r *sqliteRepository) GetAll(ctx context.Context, limit, offset int) ([]User, error) {
-	query := `SELECT id, name, email, password FROM users LIMIT ? OFFSET ?`
+	query := `SELECT id, name, email, password, address FROM users LIMIT ? OFFSET ?`
 	rows, err := r.db.QueryContext(ctx, query, limit, offset)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get users: %v", err)
@@ -90,15 +96,25 @@ func (r *sqliteRepository) GetAll(ctx context.Context, limit, offset int) ([]Use
 	var usersList []User
 	for rows.Next() {
 		var user User
-		err := rows.Scan(&user.ID, &user.Name, &user.Email, &user.Password)
+		var addressJSON []byte
+		err := rows.Scan(&user.ID, &user.Name, &user.Email, &user.Password, &addressJSON)
 		if err != nil {
 			return nil, fmt.Errorf("failed to scan user: %v", err)
 		}
+
+		if err := json.Unmarshal(addressJSON, &user.Address); err != nil {
+			return nil, fmt.Errorf("failed to unmarshal address: %v", err)
+		}
+
 		usersList = append(usersList, user)
 	}
 
 	if err = rows.Err(); err != nil {
 		return nil, fmt.Errorf("rows iteration error: %v", err)
+	}
+
+	if len(usersList) == 0 {
+		return []User{}, nil
 	}
 
 	return usersList, nil

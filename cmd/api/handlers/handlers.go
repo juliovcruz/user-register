@@ -198,8 +198,8 @@ func (h *UserHandler) ForgotPassword(ctx *fasthttp.RequestCtx) {
 // @Tags users
 // @Accept json
 // @Produce json
-// @Param limit query int false "Limite de usuários"
-// @Param offset query int false "Deslocamento"
+// @Param limit query int false "Limite de usuários Padrão: 10"
+// @Param offset query int false "Deslocamento - Padrão: 0"
 // @Success 200 {array} users.User
 // @Failure 400 {object} Err
 // @Failure 500 {object} Err
@@ -235,7 +235,7 @@ func getLimitAndOffSet(ctx *fasthttp.RequestCtx) (int, int, error) {
 	}
 
 	if limit == 0 {
-		limit = 20
+		limit = 10
 	}
 
 	return limit, offset, nil
@@ -263,6 +263,7 @@ func CorsMiddleware(next fasthttp.RequestHandler) fasthttp.RequestHandler {
 		ctx.Response.Header.Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
 
 		if string(ctx.Method()) == "OPTIONS" {
+			ctx.SetStatusCode(fasthttp.StatusOK)
 			return
 		}
 
