@@ -59,7 +59,7 @@ func main() {
 	r.GET("/{filepath:*}", fasthttpadaptor.NewFastHTTPHandler(httpSwagger.WrapHandler))
 
 	println("Server on port 8080")
-	if err := fasthttp.ListenAndServe("0.0.0.0:8080", handlers.CorsMiddleware(r.Handler)); err != nil {
+	if err := fasthttp.ListenAndServe(":8080", handlers.CorsMiddleware(r.Handler)); err != nil {
 		panic(err)
 	}
 }
