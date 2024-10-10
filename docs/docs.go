@@ -31,13 +31,13 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "Limite de usuários",
+                        "description": "Limite de usuários Padrão: 10",
                         "name": "limit",
                         "in": "query"
                     },
                     {
                         "type": "integer",
-                        "description": "Deslocamento",
+                        "description": "Deslocamento - Padrão: 0",
                         "name": "offset",
                         "in": "query"
                     }
@@ -315,7 +315,7 @@ const docTemplate = `{
                 },
                 "zip_code": {
                     "type": "string",
-                    "example": "743060400"
+                    "example": "74360400"
                 }
             }
         },

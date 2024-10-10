@@ -44,7 +44,7 @@ definitions:
         minLength: 6
         type: string
       zip_code:
-        example: "743060400"
+        example: "74360400"
         type: string
     required:
     - email
@@ -122,11 +122,11 @@ paths:
       description: 'Lista todos os usuários com limite e deslocamento utilizar header
         "Authorization": "Bearer {token}"'
       parameters:
-      - description: Limite de usuários
+      - description: 'Limite de usuários Padrão: 10'
         in: query
         name: limit
         type: integer
-      - description: Deslocamento
+      - description: 'Deslocamento - Padrão: 0'
         in: query
         name: offset
         type: integer

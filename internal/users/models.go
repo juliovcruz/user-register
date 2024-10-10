@@ -27,7 +27,7 @@ type CreateUser struct {
 	Name            string `json:"name" validate:"required,min=3,max=100" example:"User Name"`
 	Email           string `json:"email" validate:"required,email" example:"user@example.com"`
 	Password        string `json:"password" validate:"required,min=6,max=100" example:"password"`
-	ZipCode         string `json:"zip_code" validate:"required,len=8" example:"743060400"`
+	ZipCode         string `json:"zip_code" validate:"required,len=8" example:"74360400"`
 	ConfirmPassword string `json:"confirm_password" validate:"eqfield=Password" example:"password"`
 }
 

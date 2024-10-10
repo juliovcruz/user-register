@@ -23,8 +23,8 @@ type Service struct {
 	client    Client
 }
 
-func NewService(repo Repository, client Client) *Service {
-	return &Service{repo: repo, expiredIn: 2 * time.Hour, client: client}
+func NewService(repo Repository, client Client, expirationTime time.Duration) *Service {
+	return &Service{repo: repo, expiredIn: expirationTime, client: client}
 }
 
 func (s *Service) Create(ctx context.Context, email string) error {

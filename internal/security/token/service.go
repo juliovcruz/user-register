@@ -10,17 +10,18 @@ import (
 )
 
 type Service struct {
-	Secret string
+	Secret         string
+	ExpirationTime time.Duration
 }
 
 func NewService(settings settings.Settings) *Service {
-	return &Service{Secret: settings.TokenSecret}
+	return &Service{Secret: settings.TokenSettings.Secret, ExpirationTime: settings.TokenSettings.ExpirationTime}
 }
 
 func (s *Service) Create(user users.User) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"username": user.Email,
-		"exp":      time.Now().Add(time.Hour * 2).Unix(),
+		"exp":      time.Now().Add(s.ExpirationTime).Unix(),
 	})
 
 	tokenString, err := token.SignedString([]byte(s.Secret))

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"time"
 
 	"github.com/joho/godotenv"
 )
@@ -17,9 +18,15 @@ const (
 )
 
 type Settings struct {
-	ZipCodeSettings ZipCode
-	TokenSecret     string
-	Database        Database
+	ZipCodeSettings              ZipCode
+	TokenSettings                TokenSettings
+	Database                     Database
+	MailValidationExpirationTime time.Duration
+}
+
+type TokenSettings struct {
+	Secret         string
+	ExpirationTime time.Duration
 }
 
 type ZipCode struct {
@@ -45,7 +52,12 @@ var settingsByEnvironment = map[Environment]Settings{
 		Database: Database{
 			FilePath: "./database.db",
 			Driver:   "sqlite3",
+			Secrets:  Secrets{},
 		},
+		TokenSettings: TokenSettings{
+			ExpirationTime: time.Minute * 10,
+		},
+		MailValidationExpirationTime: time.Hour,
 	},
 	Staging: {
 		ZipCodeSettings: ZipCode{
@@ -54,7 +66,12 @@ var settingsByEnvironment = map[Environment]Settings{
 		Database: Database{
 			FilePath: "./database.db",
 			Driver:   "sqlite3",
+			Secrets:  Secrets{},
 		},
+		TokenSettings: TokenSettings{
+			ExpirationTime: time.Minute * 10,
+		},
+		MailValidationExpirationTime: time.Hour,
 	},
 	Production: {
 		ZipCodeSettings: ZipCode{
@@ -63,7 +80,12 @@ var settingsByEnvironment = map[Environment]Settings{
 		Database: Database{
 			FilePath: "./database.db",
 			Driver:   "sqlite3",
+			Secrets:  Secrets{},
 		},
+		TokenSettings: TokenSettings{
+			ExpirationTime: time.Minute * 10,
+		},
+		MailValidationExpirationTime: time.Hour,
 	},
 }
 
@@ -78,7 +100,7 @@ func LoadSettings(environment Environment) (Settings, error) {
 	if value == "" {
 		return Settings{}, fmt.Errorf("TOKEN_SECRET is required")
 	}
-	settings.TokenSecret = value
+	settings.TokenSettings.Secret = value
 
 	value = os.Getenv("DB_CURRENT_SECRET")
 	if value == "" {

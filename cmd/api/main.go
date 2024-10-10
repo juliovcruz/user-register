@@ -43,7 +43,7 @@ func main() {
 		panic(err)
 	}
 
-	mailValidationService := mailvalidation.NewService(mailvalidation.NewRepository(db), sender.NewClient())
+	mailValidationService := mailvalidation.NewService(mailvalidation.NewRepository(db), sender.NewClient(), sett.MailValidationExpirationTime)
 
 	userService := users.NewService(userRepository, tokenService, zipCodeService, hashService, mailValidationService)
 	userHandler := handlers.NewUserHandler(userService, tokenService)
